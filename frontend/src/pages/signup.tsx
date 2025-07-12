@@ -31,7 +31,7 @@ export default function SignupPage() {
 
         if (res.ok) {
             const response = await res.json()
-            localStorage.setItem("dataVisToken", response.access_token)
+            localStorage.setItem("token", response.access_token)
             
             toast("Signup successful!", "success")
             router.push("/")
