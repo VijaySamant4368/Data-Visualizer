@@ -76,7 +76,6 @@ export default function SignupPage() {
           onChange={handleChange}
         />
 
-        <button type="submit" className="auth-button"></button>
         <button type="submit" className={`auth-button ${loading ? "disabled" : ""}`}>{loading ? "Signing up..." : "Sign Up"}</button>
       </form>
     </div>
