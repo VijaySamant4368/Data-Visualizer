@@ -5,7 +5,7 @@ interface FileCardProps {
     title: string
     description?: string
     onDelete?: (id: string) => void
-    uploadedAt: any;
+    uploadedAt: string;
 }
 
 export default function FileCard({ id, title, description, onDelete, uploadedAt }: FileCardProps) {

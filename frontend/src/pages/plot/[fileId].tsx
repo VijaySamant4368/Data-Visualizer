@@ -7,7 +7,7 @@ import { BACKEND_URL } from "@/utils/etc"
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false })
 export default function ViewPlotPage() {
-    const [Plotly, setPlotly] = useState<any>(null);
+    const [Plotly, setPlotly] = useState<unknown>(null);
     useEffect(() => {
     if (typeof window === 'undefined') return;  //So it does not run in server side
     import('plotly.js-dist')
@@ -137,7 +137,7 @@ export default function ViewPlotPage() {
             Download Format:
             <select
               value={exportFormat}
-              onChange={(e) => setExportFormat(e.target.value as any)}
+              onChange={(e) => setExportFormat(e.target.value as 'png' | 'svg' | 'jpeg' | 'webp' | 'full-json')}
             >
               <option value="png">PNG</option>
               <option value="svg">SVG</option>
@@ -149,7 +149,7 @@ export default function ViewPlotPage() {
 
           <button
             onClick={() => {
-              const plotImg = document.querySelector(".js-plotly-plot") as any;
+              const plotImg = document.querySelector(".js-plotly-plot") as HTMLElement | null;
               if (plotImg) {
                 Plotly.downloadImage(plotImg, {
                   format: exportFormat,

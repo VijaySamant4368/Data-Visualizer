@@ -11,8 +11,9 @@ export default function Toast() {
   const [toast, setToast] = useState<ToastMessage | null>(null);
 
   useEffect(() => {
-    const handler = (e: any) => {
-      setToast(e.detail);
+    const handler = (e: Event) => {
+      const customEvent = e as CustomEvent<ToastMessage>;
+      setToast(customEvent.detail);
       setTimeout(() => setToast(null), 3000);
     };
     window.addEventListener("toast", handler);
@@ -20,18 +21,6 @@ export default function Toast() {
   }, []);
 
   if (!toast) return null;
-    const getBackgroundColor = () => {
-    switch (toast.type) {
-      case "success":
-        return "#22c55e"; // green
-      case "error":
-        return "#ef4444"; // red
-      case "warning":
-        return "#f59e0b"; // orange
-      case "info":
-      default:
-        return "#3b82f6"; // blue
-    }}
 
   return (
     <div className={`toast toast-${toast.type || "info"}`} role="alert">
