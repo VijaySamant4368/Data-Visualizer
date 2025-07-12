@@ -9,10 +9,6 @@ interface FileCardProps {
 }
 
 export default function FileCard({ id, title, description, onDelete, uploadedAt }: FileCardProps) {
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  // console.log(timeZone);
-  // console.log(uploadedAt)
-  // console.log(new Date(uploadedAt).toString())
 
     return (
     <div className="file-card">

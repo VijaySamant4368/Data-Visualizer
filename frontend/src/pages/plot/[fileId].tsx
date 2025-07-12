@@ -3,10 +3,16 @@ import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import { toast } from "@/utils/toast"
 import { BACKEND_URL } from "@/utils/etc"
+import { Layout, Data } from "plotly.js";
 
 
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false })
+const Plot = dynamic(() => import("react-plotly.js"), { ssr: false }) as React.ComponentType<{
+  data: Data[];
+  layout: Partial<Layout>;
+  // [key: string]: any;
+}>
 export default function ViewPlotPage() {
+    const router = useRouter()
     const [Plotly, setPlotly] = useState<unknown>(null);
     useEffect(() => {
     if (typeof window === 'undefined') return;  //So it does not run in server side
@@ -22,9 +28,8 @@ export default function ViewPlotPage() {
         if (!token) {
             router.push("/login")
         }
-    }, [])
+    }, [router])
 
-    const router = useRouter()
     const { fileId } = router.query
 
     const [dataSet, setDataSet] = useState<number[][]>([])
@@ -35,7 +40,8 @@ export default function ViewPlotPage() {
     const [color, setColor] = useState("#ff0000")
     const [isLoading, setIsLoading] = useState(true)
     const [exportFormat, setExportFormat] = useState<'png' | 'svg' | 'jpeg' | 'webp' | 'full-json'>('png');
-    const [plotMode, setPlotMode] = useState("markers");
+    const [plotMode, setPlotMode] = useState<"lines" | "markers" | "lines+markers">("markers");
+
 
     useEffect(() => {
         if (!fileId) return
@@ -69,12 +75,12 @@ export default function ViewPlotPage() {
         }
 
         fetchFile()
-    }, [fileId])
+    }, [fileId, router])
 
     if (isLoading) return <div className="loading">Loading…</div>
 
     const plotWidth = Math.min(800, window.innerWidth* 10/11)
-    const layout = { width: plotWidth, height: Math.max(plotWidth*3/4, 300), title: plotName };
+    const layout = { width: plotWidth, height: Math.max(plotWidth*3/4, 300), title: { text: plotName } };
 
 
     return (
@@ -119,19 +125,7 @@ export default function ViewPlotPage() {
 
           </div>
 
-          <Plot
-            data={[
-              {
-                x: dataSet.map((row) => row[xAxis]),
-                y: dataSet.map((row) => row[yAxis]),
-                type: "scatter",
-                mode: plotMode,
-                marker: { color },
-              },
-            ]}
-            layout={layout}
-          />
-
+          <Plot data={[{x: dataSet.map((row) => row[xAxis]),y: dataSet.map((row) => row[yAxis]),type: "scatter",mode: plotMode,marker: { color },},]}layout={layout}/>
           <div className="download-controls">
           <label>
             Download Format:
@@ -151,6 +145,7 @@ export default function ViewPlotPage() {
             onClick={() => {
               const plotImg = document.querySelector(".js-plotly-plot") as HTMLElement | null;
               if (plotImg) {
+                // @ts-expect-error: Plotly is dynamically loaded and may be unknown at compile time
                 Plotly.downloadImage(plotImg, {
                   format: exportFormat,
                   filename: plotName || "plot",

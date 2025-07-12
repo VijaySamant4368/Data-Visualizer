@@ -4,15 +4,14 @@ import { toast } from "@/utils/toast"
 import { BACKEND_URL } from "@/utils/etc"
 
 export default function UploadPlotPage() {
+    const router = useRouter()
 
     useEffect(() => {
         const token = localStorage.getItem("token")
         if (!token) {
             router.push("/login")
         }
-    }, [])
-
-    const router = useRouter()
+    }, [router])
 
     const [formData, setFormData] = useState({
         file: null,

@@ -5,16 +5,16 @@ import { BACKEND_URL } from "@/utils/etc";
 
 export default function SignupPage() {
 
+    const router = useRouter()
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
             router.push("/"); // or /dashboard
         }
-    }, []);
+    }, [router]);
 
 
     const [form, setForm] = useState({ email: "", username: "", password: "" })
-    const router = useRouter()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value })

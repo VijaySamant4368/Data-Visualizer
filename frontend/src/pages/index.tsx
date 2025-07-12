@@ -8,20 +8,20 @@ interface FileMeta {
     id: string
     title: string
     description?: string
-    uploadDate?: string
+    uploadDate: string
 }
 
 export default function HomePage() {
+  const router = useRouter()
     useEffect(() => {
         const token = localStorage.getItem("token")
         if (!token) {
             router.replace("/login")
         }
-    }, [])
+    }, [router])
 
     const [files, setFiles] = useState<FileMeta[]>([])
     const [isLoading, setIsLoading] = useState(true)
-    const router = useRouter()
 
     useEffect(() => {
         async function fetchFiles() {
