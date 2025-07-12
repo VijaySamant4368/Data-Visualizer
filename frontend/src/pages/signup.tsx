@@ -4,6 +4,7 @@ import { toast } from "@/utils/toast"
 import { BACKEND_URL } from "@/utils/etc";
 
 export default function SignupPage() {
+  const [loading, setLoading] = useState(false)
 
     const router = useRouter()
     useEffect(() => {
@@ -22,6 +23,7 @@ export default function SignupPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setLoading(true)
 
         const res = await fetch(BACKEND_URL+"/auth/signup", {
             method: "POST",
@@ -39,6 +41,7 @@ export default function SignupPage() {
             const error = await res.json()
             toast(error.detail || "Signup failed", "error")
         }
+        setLoading(false)
     }
 
     return (
@@ -73,7 +76,8 @@ export default function SignupPage() {
           onChange={handleChange}
         />
 
-        <button type="submit" className="auth-button">Sign Up</button>
+        <button type="submit" className="auth-button"></button>
+        <button type="submit" className={`auth-button ${loading ? "disabled" : ""}`}>{loading ? "Signing up..." : "Sign Up"}</button>
       </form>
     </div>
     )
