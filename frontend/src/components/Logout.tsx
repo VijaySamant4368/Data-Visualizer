@@ -1,7 +1,7 @@
-import { useRouter } from "next/router"
+// import { useRouter } from "next/router"
 
 export default function LogoutButton() {
-    const router = useRouter()
+    // const router = useRouter()
 
         const handleLogout = () => {
             localStorage.removeItem("token");

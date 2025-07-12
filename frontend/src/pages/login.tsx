@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
+// import { useRouter } from "next/router"
 import { toast } from "@/utils/toast"
 import { BACKEND_URL } from "@/utils/etc";
 
 export default function LoginPage() {
     const [loading, setLoading] = useState(false)
 
-    const router = useRouter()
+    // const router = useRouter()
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
