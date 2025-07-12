@@ -10,9 +10,9 @@ export default function LoginPage() {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            router.push("/"); // or /dashboard
+             window.location.href = "/"
         }
-    }, [router]);
+    }, []);
 
     const [form, setForm] = useState({ email: "", password: "" })
 
@@ -33,7 +33,7 @@ export default function LoginPage() {
         if (res.ok) {
             const { access_token } = await res.json()
             localStorage.setItem("token", access_token)
-            router.push("/")
+             window.location.href = "/"
         } else {
             const error = await res.json()
             toast(error.detail || "Login failed", "error")

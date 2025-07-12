@@ -10,9 +10,9 @@ export default function SignupPage() {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            router.push("/"); // or /dashboard
+             window.location.href = "/"
         }
-    }, [router]);
+    }, []);
 
 
     const [form, setForm] = useState({ email: "", username: "", password: "" })
@@ -36,7 +36,7 @@ export default function SignupPage() {
             localStorage.setItem("token", response.access_token)
             
             toast("Signup successful!", "success")
-            router.push("/")
+             window.location.href = "/"
         } else {
             const error = await res.json()
             toast(error.detail || "Signup failed", "error")
