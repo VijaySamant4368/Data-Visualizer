@@ -24,8 +24,6 @@ async def upload_csv(
     user_id: str = Depends(get_current_user),
     defaultValue = Form(None)
 ):
-    print("default_value")
-    print(defaultValue)
     df = pd.read_csv(file.file, header=0 if hasHeaders else None)
     if defaultValue is not None:
         df.fillna(defaultValue, inplace=True)

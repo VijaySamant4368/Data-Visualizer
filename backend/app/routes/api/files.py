@@ -47,7 +47,11 @@ async def get_file_by_id(file_id: str) -> dict:
     return file
 
 async def delete_file(file_id: str, user_id: str) -> bool:
-    file = await file_collection.find_one({"_id": ObjectId(file_id), "owner": user_id})
+    try:
+        _id = ObjectId(file_id)
+    except:
+        return False
+    file = await file_collection.find_one({"_id": _id, "owner": user_id})
     print({"_id": file_id, "owner": user_id})
     if not file:
         return False
@@ -65,7 +69,6 @@ async def delete_file(file_id: str, user_id: str) -> bool:
 @router.delete("/files/{file_id}")
 async def delete_file_route(file_id: str, user=Depends(get_current_user)):
     success = await delete_file(file_id, user)  # Check ownership too
-    print(user)
     if not success:
         raise HTTPException(status_code=404, detail="File not found or not owned by user")
     return {"message": "File deleted"}
