@@ -41,6 +41,12 @@ Root
 
 ## Setup Instructions
 
+### Clone the repo
+```
+git clone https://github.com/VijaySamant4368//VijaySamant_PlotTest.git
+cd VijaySamant_PlotTest
+```
+
 ###  Backend (FastAPI)
 
 ```bash
@@ -50,8 +56,12 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 uvicorn app.main:app --reload
 ````
-
-> Backend runs on: `http://localhost:8000`
+ Before running the backend, create a .env file in the backend/ directory with the following:
+```
+MONGO_URI="your_mongodb_connection_string"
+SECRET_KEY="your_jwt_secret_key"
+```
+Backend runs on: `http://localhost:8000`
 
 ### Frontend (Next.js)
 
@@ -60,7 +70,10 @@ cd frontend
 npm install
 npm run dev
 ```
-
+Before running the frontend, create a .env file in the frontend/ directory with the following:
+```
+NEXT_PUBLIC_BACKEND_URL="Backend-URL"
+```
 > Frontend runs on: `http://localhost:3000`
 
 ---
