@@ -311,7 +311,9 @@ Below is a visual representation of the user interaction flow:
 
 ## Demo Video
 
-[Watch the demo](#)
+
+[![Watch the demo](https://img.youtube.com/vi/LG1RDPFjGF4/0.jpg)](https://www.youtube.com/watch?v=LG1RDPFjGF4)
+
 
 ---
 
